@@ -1,0 +1,21 @@
+# 權重與模型檔案（太大了，不進 Git）
+*.pt
+*.onnx
+*.engine
+
+# Python 暫存檔
+__pycache__/
+*.pyc
+
+# Jupyter 暫存
+.ipynb_checkpoints/
+
+# 虛擬環境
+.venv/
+venv/
+env/
+
+# 數據集（VisDrone 幾十 GB 絕對不能進去）
+datasets/
+data/*
+!data/demo.jpg
