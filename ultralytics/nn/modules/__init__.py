@@ -16,10 +16,7 @@ Examples:
     >>> torch.onnx.export(m, x, f)
     >>> os.system(f"onnxslim {f} {f} && open {f}")  # pip install onnxslim
 """
-from .RFB_CBAM import*
-from .FocusSE import* 
-from .SE import*
-from .BiFPN import *
+
 from .block import (
     C1,
     C2,

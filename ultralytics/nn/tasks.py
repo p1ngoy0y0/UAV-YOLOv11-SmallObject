@@ -6,6 +6,7 @@ import re
 import types
 from copy import deepcopy
 from pathlib import Path
+from models.nn.BiFPN import BiFPN_Concat
 
 import torch
 import torch.nn as nn
@@ -14,11 +15,6 @@ from ultralytics.nn.autobackend import check_class_names
 from ultralytics.nn.modules import (
     AIFI,
     C1,
-    BiFPN_Concat,
-    RFB_CBAM,
-    RFB_CBAM_Spatial,
-    FocusSE,
-    SEModule,
     C2,
     C2PSA,
     C3,
