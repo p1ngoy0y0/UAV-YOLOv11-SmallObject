@@ -14,6 +14,7 @@ __pycache__/
 .venv/
 venv/
 env/
+/uav_yolo11_SmallObject/
 
 # 數據集（VisDrone 幾十 GB 絕對不能進去）
 datasets/
