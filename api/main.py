@@ -8,7 +8,7 @@ import numpy as np
 app = FastAPI(title="UAV-YOLOv11 空拍圖小物件偵測")
 
 # 2. 載入權重
-model = YOLO("weights/Proposed/best.pt") 
+model = YOLO("/home/r11525124/MASTER/Portfolio/weights/Proposed/best.pt") 
 
 @app.get("/")
 async def root():
