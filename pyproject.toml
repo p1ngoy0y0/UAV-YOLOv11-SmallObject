@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uav-yolo11-SmallObject"
+version = "0.1.0"
+description = "基於 BiFPN 與 SPD-Conv 改進之 YOLOv11 無人機小j4ru04偵測 FastAPI 服務"
+requires-python = ">=3.8"
+# 核心運行依賴：只放直接 import 的一級套件
+dependencies = [
+    "fastapi==0.124.4",
+    "uvicorn==0.33.0",
+    "pydantic==2.10.6",
+    "python-multipart==0.0.20", # FastAPI 處理圖片上傳必備
+    "torch==2.4.1", 
+    "torchvision==0.19.1",
+    "numpy==1.24.4",
+    "opencv-python==4.13.0.92",
+    "pillow==10.4.0",
+    "PyYAML==6.0.3",
+    "requests==2.32.4",
+    "scipy==1.10.1",
+    "tqdm==4.67.3",
+    "psutil==7.2.2",
+    "typing_extensions==4.12.2",
+    "albumentations==1.4.18", # 你的增強策略
+    "ultralytics-thop==2.0.19", # 模型參數與 GFLOPs 計算
+    # 正式安裝：直接抓取你修改過 BiFPN 與 SPD 的核心版本
+    "ultralytics @ git+https://github.com/p1ngoy0y0/UAV-YOLOv11-SmallObject.git#subdirectory=ultralytics"
+]
+
+[project.optional-dependencies]
+# 研究與分析依賴：開發測試時才裝，不進生產環境 Docker Image
+dev = [
+    "polars==1.8.2",
+    "scikit-image==0.21.0",
+    "matplotlib==3.7.5",
+    "networkx==3.1",
+    "imageio==2.35.1"
+]
+
+[tool.setuptools]
+# 1. 定義哪些資料夾是 Python 套件 (Packages)
+packages = ["api", "ultralytics"]
+
+[tool.setuptools.package-dir]
+"api" = "api"
+"ultralytics" = "ultralytics"
+
+# 2. 關鍵：包含非 Python 的資源文件 (Package Data)
+[tool.setuptools.package-data]
+# 包含所有的模型架構 YAML (BiFPN, SPD-Conv 都在這)
+"models" = ["*.yaml"]
+"weights" = ["./weights/**/*.pt"]
