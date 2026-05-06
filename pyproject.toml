@@ -40,6 +40,17 @@ dev = [
     "imageio==2.35.1"
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["api*"] # 確保你的 FastAPI 邏輯被打包
+[tool.setuptools]
+# 1. 定義哪些資料夾是 Python 套件 (Packages)
+packages = ["api", "ultralytics"]
+
+[tool.setuptools.package-dir]
+"api" = "api"
+"ultralytics" = "ultralytics"
+
+# 2. 關鍵：包含非 Python 的資源文件 (Package Data)
+[tool.setuptools.package-data]
+# 包含所有的模型架構 YAML (BiFPN, SPD-Conv 都在這)
+"models" = ["*.yaml"]
+# 包含你辛苦練出來的 12.02M 參數權重
+"weights" = ["./weights/**/*.pt"]
