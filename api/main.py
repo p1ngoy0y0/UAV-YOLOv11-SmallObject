@@ -1,25 +1,16 @@
-import sys
-import os
-from pathlib import Path
-import io
-
-# 1. 路徑注入（確保雲端能抓到你的客製化 ultralytics）
-FILE = Path(__file__).resolve()
-ROOT = FILE.parents[1] 
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 from ultralytics import YOLO
+from pathlib import Path
 from PIL import Image
 import cv2
 import numpy as np
 
-app = FastAPI(title="UAV-YOLOv11 小物件偵測")
-
 # 使用 ROOT 變數組合路徑，增加部署靈活性
+ROOT = Path(__file__).resolve().parents[1]
 WEIGHT_PATH = ROOT / "weights" / "Proposed" / "best.pt"
+
+app = FastAPI(title="UAV-YOLOv11 小物件偵測")
 model = YOLO(str(WEIGHT_PATH))
 
 @app.post("/predict_image")
