@@ -52,5 +52,4 @@ packages = ["api", "ultralytics"]
 [tool.setuptools.package-data]
 # 包含所有的模型架構 YAML (BiFPN, SPD-Conv 都在這)
 "models" = ["*.yaml"]
-# 包含你辛苦練出來的 12.02M 參數權重
 "weights" = ["./weights/**/*.pt"]

@@ -1,36 +1,63 @@
-from fastapi import FastAPI, File, UploadFile
-from ultralytics import YOLO
+import sys
+import os
+from pathlib import Path
 import io
+
+# 1. 路徑注入（確保雲端能抓到你的客製化 ultralytics）
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[1] 
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import StreamingResponse
+from ultralytics import YOLO
 from PIL import Image
+import cv2
 import numpy as np
 
-# 1. 初始化 FastAPI APP
-app = FastAPI(title="UAV-YOLOv11 空拍圖小物件偵測")
+app = FastAPI(title="UAV-YOLOv11 小物件偵測")
 
-# 2. 載入權重
-model = YOLO("/home/r11525124/MASTER/Portfolio/weights/Proposed/best.pt") 
+# 使用 ROOT 變數組合路徑，增加部署靈活性
+WEIGHT_PATH = ROOT / "weights" / "Proposed" / "best.pt"
+model = YOLO(str(WEIGHT_PATH))
 
-@app.get("/")
-async def root():
-    return {"message": "UAV-YOLOv11 API 就緒"}
-
-@app.post("/predict")
-async def predict(file: UploadFile = File(...)):
-    # 讀取上傳的圖片內容
-    request_object_content = await file.read()
-    img = Image.open(io.BytesIO(request_object_content)).convert("RGB")
+@app.post("/predict_image")
+async def predict_image(file: UploadFile = File(...)):
+    """
+    偵測並回傳標註後的圖片 (Ultralytics UI)
+    """
+    # 讀取圖片
+    contents = await file.read()
+    nparr = np.frombuffer(contents, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     
-    # 3. 執行推理
+    # 執行推理
     results = model.predict(img, conf=0.25)
     
-    # 4. 整理回傳結果
+    # 利用 Ultralytics 內建的 .plot() 繪圖
+    # im_bgr 會是一個 numpy array，風格與官方完全一致
+    annotated_frame = results[0].plot(line_width=1, font_size=1.5) 
+    
+    # 將 BGR 轉回 RGB 並編碼為 JPEG
+    _, im_encode = cv2.imencode(".jpg", annotated_frame)
+    return StreamingResponse(io.BytesIO(im_encode.tobytes()), media_type="image/jpeg")
+
+@app.post("/predict_json")
+async def predict_json(file: UploadFile = File(...)):
+    """
+    JSON 回傳邏輯，保留給後端數據處理使用
+    """
+    contents = await file.read()
+    img = Image.open(io.BytesIO(contents)).convert("RGB")
+    results = model.predict(img, conf=0.25)
+    
     detections = []
     for result in results:
         for box in result.boxes:
             detections.append({
                 "class": result.names[int(box.cls)],
                 "confidence": float(box.conf),
-                "bbox": box.xyxy.tolist()[0] # [x1, y1, x2, y2]
+                "bbox": box.xyxy.tolist()[0]
             })
-            
     return {"count": len(detections), "results": detections}
