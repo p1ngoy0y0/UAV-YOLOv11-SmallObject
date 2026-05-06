@@ -6,7 +6,6 @@ import re
 import types
 from copy import deepcopy
 from pathlib import Path
-from models.nn.BiFPN import BiFPN_Concat
 
 import torch
 import torch.nn as nn
@@ -14,6 +13,7 @@ import torch.nn as nn
 from ultralytics.nn.autobackend import check_class_names
 from ultralytics.nn.modules import (
     AIFI,
+    BiFPN_Concat,
     C1,
     C2,
     C2PSA,
