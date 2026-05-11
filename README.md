@@ -11,19 +11,18 @@
 *   **BiFPN (Weighted Feature Fusion)**: 採用雙向加權特徵金字塔結構，能更有效地融合深層語義與淺層細節特徵，且特徵融合過程更具效率。
 *   **SPD-Conv (Lossless Downsampling)**: 藉由 **Space-to-Depth** 機制取代會造成資訊流失的步長卷積，使模型在連續下採樣後仍能保留小物件的細微邊界與紋理資訊，解決小目標「特徵消失」的痛點。
 
-## 資料夾結構 (Repository Structure)
-本專案遵循模組化設計，將自定義層獨立於 `models/nn/` 中：
+## 資料夾結構 (Repository Structure)：
 ```bash
 ├── data/               # 資料集路徑
 ├── models/             # 模型架構定義 (YAML)
-│   ├── nn/             # [核心] 自定義網路層實作
-│   │   └── BiFPN.py    # BiFPN 核心代碼
 │   ├── yolo11_BiFPN_s.yaml
 │   ├── yolo11_BiFPN_SPDConv.yaml
 │   └── yolo11_SPD.yaml
 ├── ultralytics/        # 核心運算引擎包
 ├── weights/            # 訓練權重存儲
 │   ├── BiFPN/
+│   ├── Proposed/
+│   ├── SPDConv/
 │   └── YOLOv11/
 ├── .gitignore          # 版本控制忽略清單
 ├── README.md           # 專案說明文件
