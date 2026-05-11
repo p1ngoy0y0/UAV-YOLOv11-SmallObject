@@ -13,6 +13,11 @@
 
 ## 資料夾結構 (Repository Structure)：
 ```bash
+├── api/                #FastAPI 服務
+│   ├── __init__.py
+│   ├── app.py
+│   ├── detector.py
+│   └── main.py
 ├── data/               # 資料集路徑
 ├── models/             # 模型架構定義 (YAML)
 │   ├── yolo11_BiFPN_s.yaml
