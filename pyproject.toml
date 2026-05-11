@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uav-yolo11-SmallObject"
-version = "0.2.0"
+version = "1.0.0"
 description = "基於 BiFPN 與 SPD-Conv 改進之 YOLOv11 無人機小物件偵測 FastAPI"
 requires-python = ">=3.8"
 # 核心運行依賴：只放直接 import 的一級套件
@@ -29,7 +29,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# 研究與分析依賴：開發測試時才裝，不進生產環境 Docker Image
 dev = [
     "polars==1.8.2",
     "scikit-image==0.21.0",
@@ -41,3 +40,7 @@ dev = [
 [tool.setuptools]
 # 定義哪些資料夾是 Python 套件 (Packages)
 packages = ["api", "ultralytics"]
+
+[tool.setuptools.package-dir]
+"api" = "api"
+"ultralytics" = "ultralytics"
