@@ -3,11 +3,12 @@ FROM python:3.8
 WORKDIR /workspace
 
 RUN apt-get update && apt-get install -y libgl1 && rm -rf /var/lib/apt/lists/*
+
 # 複製環境清單並安裝
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 複製你的樹狀專案代碼與權重
+# 複製 Pack 與權重
 COPY api/ ./api/
 COPY ultralytics/ ./ultralytics/
 COPY weights/Proposed/ ./weights/Proposed/

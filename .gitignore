@@ -1,4 +1,4 @@
-# 權重與模型檔案（太大了，不進 Git）
+# 權重與模型檔案
 *.pt
 *.onnx
 *.engine
@@ -19,7 +19,7 @@ uav_yolo11_SmallObject/
 *.egg
 
 
-# 數據集（VisDrone 幾十 GB 絕對不能進去）
+# 數據集
 datasets/
 data/*
 !data/demo.jpg
