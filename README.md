@@ -30,8 +30,10 @@
 │   ├── SPDConv/
 │   └── YOLOv11/
 ├── .gitignore          # 版本控制忽略清單
+├── dockerfile          # Dockerfile
 ├── README.md           # 專案說明文件
-└── requirements.txt    # 環境依賴清單
+├── requirements.txt    # 環境依賴清單
+└── Thesis.pdf          # 論文內容簡介(A0海報格式)
 ```
 
 ## 實驗結果 (Performance Comparison)
