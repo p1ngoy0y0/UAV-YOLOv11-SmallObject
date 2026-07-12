@@ -1,32 +1,24 @@
-# --- 核心 Web 服務 ---
-fastapi==0.124.4
-uvicorn==0.33.0
-pydantic==2.10.6
-python-multipart==0.0.20
+# --- Web Framework & Async ---
+fastapi>=0.124.0
+uvicorn>=0.33.0
+httpx>=0.24.0
+python-multipart>=0.0.20
 
-# --- 深度學習與計算核心 ---
-torch==2.4.1
-torchvision==0.19.1
-numpy==1.24.4
-scipy==1.10.1
+# --- AI Core ---
+torch>=2.4.0
+torchvision>=0.19.0
+# ultralytics is a local directory in this project, not a PyPI package.
+# The following are its dependencies.
+opencv-python-headless>=4.8.0
+pillow>=10.4.0
+pyyaml>=6.0.0
+requests>=2.32.0
+scipy>=1.10.0
+psutil>=7.2.0
+ultralytics-thop>=2.0.19
 
-# --- 影像處理與增強 ---
-opencv-python==4.13.0.92
-pillow==10.4.0
-albumentations==1.4.18
 
-# --- 系統與監控工具 ---
-PyYAML==6.0.3
-requests==2.32.4
-tqdm==4.67.3
-psutil==7.2.2
-typing_extensions==4.12.2
-
-# --- YOLOv11 客製化算子支援 ---
-ultralytics-thop==2.0.19
-
-polars==1.8.2
-scikit-image==0.21.0
-matplotlib==3.7.5
-networkx==3.1
-imageio==2.35.1
+# --- LLM & Data Science ---
+openai>=1.0.0
+pydantic>=2.0.0
+numpy>=1.24.0

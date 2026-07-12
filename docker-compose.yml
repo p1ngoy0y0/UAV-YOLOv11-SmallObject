@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api_server:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: fastapi_app_uav_smallobject
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./api:/workspace/api
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    devices:
+      - "/dev/nvidia0:/dev/nvidia0"
+      - "/dev/nvidiactl:/dev/nvidiactl"
+      - "/dev/nvidia-uvm:/dev/nvidia-uvm"
+    networks:
+      - ai_net
+
+  ollama:
+    build:
+      context: .
+      dockerfile: dockerfile.ollama
+    container_name: ollama_service
+    volumes:
+      - ./ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    devices:
+      - "/dev/nvidia0:/dev/nvidia0"
+      - "/dev/nvidiactl:/dev/nvidiactl"
+      - "/dev/nvidia-uvm:/dev/nvidia-uvm"
+    networks:
+      - ai_net
+
+networks:
+  ai_net:
+    driver: bridge

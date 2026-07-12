@@ -2,6 +2,7 @@
 *.pt
 *.onnx
 *.engine
+*.ollama_data
 
 # Python 暫存檔
 __pycache__/

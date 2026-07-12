@@ -1,0 +1,15 @@
+# Use the official Ollama image as the base
+FROM ollama/ollama
+
+# Install curl, which is needed for the healthcheck in the entrypoint script
+# Also, add procps for process monitoring if needed, and clean up
+RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/lists/*
+
+# Copy the entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint for the container
+ENTRYPOINT ["/entrypoint.sh"]
